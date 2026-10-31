@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria Deliziosa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            background:
+                radial-gradient(ellipse at 12% 10%, #fff8ed 0, transparent 38rem),
+                #efe5d6;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 28px clamp(16px, 4vw, 48px) 56px;
+            color: #30221d;
+            font-family: Georgia, "Times New Roman", serif;
+            line-height: 1.65;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 34px;
+            padding: clamp(32px, 7vw, 76px) clamp(24px, 6vw, 72px);
+            border: 1px solid #8a4c35;
+            border-radius: 26px;
+            background:
+                radial-gradient(ellipse at 82% 18%, #d29a5b88, transparent 28%),
+                radial-gradient(ellipse at 100% 100%, #461d19, transparent 48%),
+                linear-gradient(125deg, #63261f, #8b3c2b 56%, #a75a37);
+            color: #fff8ed;
+            box-shadow: 0 18px 38px #4e291f2b;
+        }
+
+        .hero::after {
+            position: absolute;
+            right: -52px;
+            bottom: -132px;
+            width: 360px;
+            height: 360px;
+            border: 1px solid #fff5e333;
+            border-radius: 50%;
+            box-shadow: 0 0 0 24px #fff5e30b, 0 0 0 48px #fff5e308;
+            content: "";
+            pointer-events: none;
+        }
+
+        .hero .eyebrow {
+            margin: 0 0 10px;
+            color: #f0c98e;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0 0 16px;
+            color: #fff8ed;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            font-size: clamp(2.4rem, 7vw, 4.8rem);
+            letter-spacing: -0.055em;
+            line-height: 1.08;
+            text-align: center;
+        }
+
+        .hero-copy {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+            color: #fff0dd;
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            text-align: center;
+        }
+
+        p {
+            max-width: 760px;
+            margin: 18px auto;
+            font-size: 1.05rem;
+        }
+
+        u {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 36px 0 14px;
+            color: #64291f;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            text-decoration: none;
+            scroll-margin-top: 24px;
+        }
+
+        u::after {
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, #c8a47a, transparent);
+            content: "";
+        }
+
+        ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 9px;
+            margin: 0;
+            padding: 14px;
+            border: 1px solid #e7d8c4;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #fffdf9, #f8f0e4);
+            box-shadow: 0 8px 22px #5633210d, inset 0 1px #fff;
+            list-style: none;
+        }
+
+        li {
+            min-width: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f8f0e5, #f3e7d7);
+            transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+        }
+
+        li:hover {
+            transform: translateY(-2px);
+            border-color: #dfc5a5;
+            background: linear-gradient(135deg, #fff8ee, #f3e3cf);
+            box-shadow: 0 5px 12px #56332112;
+        }
+
+        .menu-item-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            min-height: 44px;
+            padding: 9px 12px;
+            color: #49352b;
+            font-size: 0.96rem;
+            text-decoration: none;
+        }
+
+        .menu-item-link::after {
+            color: #aa7554;
+            content: "›";
+            font-family: Arial, sans-serif;
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .menu-item-link:hover {
+            color: #7d2c24;
+        }
+
+        .menu-tools {
+            display: grid;
+            gap: 16px;
+            margin: 0 0 28px;
+            padding: 18px;
+            border: 1px solid #e5d5c0;
+            border-radius: 18px;
+            background: #fffaf3d9;
+            box-shadow: 0 8px 22px #5633210d;
+        }
+
+        .menu-search {
+            width: 100%;
+            min-height: 48px;
+            padding: 0 16px;
+            border: 1px solid #d6c2a8;
+            border-radius: 11px;
+            background: #fffdf9;
+            color: #30221d;
+            font: inherit;
+        }
+
+        .menu-search:focus {
+            outline: 3px solid #b66b3c55;
+            border-color: #9d5435;
+        }
+
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .category-nav a {
+            padding: 6px 11px;
+            border: 1px solid #e5d5c0;
+            border-radius: 999px;
+            background: linear-gradient(#fffdf9, #f6ecde);
+            color: #6a3528;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            font-size: 0.84rem;
+            text-decoration: none;
+            transition: background 160ms ease, color 160ms ease;
+        }
+
+        .category-nav a:hover {
+            background: #762f24;
+            color: #fff8ed;
+        }
+
+        .item-page {
+            max-width: 760px;
+            margin: clamp(16px, 6vh, 60px) auto;
+            padding: clamp(22px, 5vw, 42px);
+            border: 1px solid #e7d8c4;
+            border-radius: 24px;
+            background:
+                radial-gradient(ellipse at 90% 5%, #e8c99a55, transparent 36%),
+                linear-gradient(145deg, #fffdf9, #f8f0e4);
+            text-align: center;
+            box-shadow: 0 18px 42px #5633211c;
+        }
+
+        .item-page h1 {
+            margin: 10px 0 18px;
+            color: #64291f;
+            font-size: clamp(2rem, 6vw, 3.4rem);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: #813d2b;
+        }
+
+        .item-category {
+            margin: 8px auto;
+            color: #996239;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .item-picture {
+            display: block;
+            width: min(100%, 560px);
+            margin: 26px auto;
+            border: 8px solid #fffdf9;
+            border-radius: 20px;
+            box-shadow: 0 12px 26px #5633211c;
+        }
+
+        .item-description {
+            margin-bottom: 8px;
+            color: #614d41;
+            font-size: 1.1rem;
+        }
+
+        .cookie-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+        }
+
+        .cookie-gallery img {
+            width: 100%;
+            height: 210px;
+            border: 6px solid #fffdf9;
+            border-radius: 18px;
+            object-fit: cover;
+            box-shadow: 0 8px 18px #56332120;
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        .cookie-gallery img:hover {
+            transform: translateY(-4px) rotate(-0.5deg);
+            box-shadow: 0 14px 26px #5633212b;
+        }
+
+        .contact-heading {
+            margin-top: 48px;
+            color: #8b3a62;
+            font-family: "Comic Code", "Segoe Script", cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px #d9a6b8;
+        }
+
+        a {
+            color: #9c3d2c;
+            font-weight: 700;
+        }
+
+        a:hover {
+            color: #5e211b;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 18px 14px 36px;
+            }
+
+            .hero {
+                margin-bottom: 24px;
+                border-radius: 20px;
+            }
+
+            ul {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .menu-tools {
+                padding: 13px;
+            }
+
+            .cookie-gallery img {
+                height: 175px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="hero">
+<p class="eyebrow">Handcrafted · Fresh from our oven</p>
+<h1>Pizzeria Deliziosa</h1>
+<p class="hero-copy">We serve the best pizzas in town!
+  Come and try our delicious pizzas and wings!
+They are made with the freshest ingredients, and have a taste that will leave you craving for more!.
+ Best of all, they are packed with protein and other essential nutrients. And they taste amazing!
+They are a perfect choice for anyone looking for a healthy and delicious meal. We have many flavors to choose from, as well\
+as a customizable experience for our customers, coming with a variety of toppings and crust options to suit every taste.</p>
+</header>
+<u>Pizzas</u>
+<ul>
+  <li>Custom Pizza</li>
+  <li>Calzone</li>
+  <li>Stromboli</li>
+  <li>Pizza Rolls</li>
+  <li>Deep Dish Pizza</li>
+  <li>Stuffed Crust Pizza</li>
+  <li>Gluten-Free Pizza</li>
+  <li>Vegan Pizza</li>
+  <li>Cheeseless Pizza</li>
+  <li>White Pizza</li>
+  <li>Marinara Pizza</li>
+  <li>Buffalo Chicken Pizza</li>
+  <li>Margherita Pizza</li>
+  <li>Pepperoni Pizza</li>
+  <li>BBQ Chicken Pizza</li>
+  <li>Veggie Pizza</li>
+  <li>Hawaiian Pizza</li>
+  <li>Meat Lovers Pizza</li>
+  <li>Supreme Pizza</li>
+  <li>Detroit-Style Pizza</li>
+  <li>New York-Style Pizza</li>
+  <li>Chicago-Style Pizza</li>
+  <li>Neapolitan Pizza</li>
+  <li>Sicilian Pizza</li>
+  <li>Greek Pizza</li>
+  <li>Caprese Pizza</li>
+  <li>Four Cheese Pizza</li>
+  <li>Buffalo Pizza</li>
+  <li>Hawaiian BBQ Pizza</li>
+  <li>Truffle Pizza</li>
+  <li>Prosciutto Pizza</li>
+  <li>Pesto Pizza</li>
+  <li>Capricciosa Pizza</li>
+  <li>Quattro Stagioni Pizza</li>
+  <li>Diavola Pizza</li>
+  <li>Frutti di Mare Pizza</li>
+  <li>Tartufo Pizza</li>
+  <li>Fungi Pizza</li>
+  <li>Prosciutto and Arugula Pizza</li>
+  <li>Buffalo Chicken and Ranch Pizza</li>
+  <li>Hawaiian Luau Pizza</li>
+  <li>Mediterranean Pizza</li>
+  
+</ul>
+<u>Breakfast Pizzas</u>
+<ul>
+  <li>Breakfast Pizza</li>
+  <li>Buffalo Breakfast Pizza</li>
+  <li>Veggie Breakfast Pizza</li>
+  <li>Meat Lovers Breakfast Pizza</li>
+  <li>Supreme Breakfast Pizza</li>
+  <li>Hawaiian Breakfast Pizza</li>
+  <li>Buffalo Hawaiian Breakfast Pizza</li>
+  <li>Mediterranean Breakfast Pizza</li>
+  <li>Buffalo Mediterranean Breakfast Pizza</li>
+  <li>Supreme Mediterranean Breakfast Pizza</li>
+  <li>Buffalo Supreme Mediterranean Breakfast Pizza</li>
+  <li>Hawaiian Luau Breakfast Pizza</li>
+  <li>Buffalo Hawaiian Luau Breakfast Pizza</li>
+  <li>Mediterranean Luau Breakfast Pizza</li>
+  <li>Buffalo Mediterranean Luau Breakfast Pizza</li>
+  <li>Supreme Luau Breakfast Pizza</li>
+  <li>Buffalo Supreme Luau Breakfast Pizza</li>
+  <li>Mediterranean Supreme Luau Breakfast Pizza</li>
+  <li>Buffalo Mediterranean Supreme Luau Breakfast Pizza</li>
+  <li>Hawaiian Mediterranean Supreme Luau Breakfast Pizza</li>
+  <li>Buffalo Hawaiian Mediterranean Supreme Luau Breakfast Pizza</li>
+  <li>Hawaiian Supreme Luau Breakfast Pizza</li>
+  <li>Buffalo Hawaiian Supreme Luau Breakfast Pizza</li>
+  <li>Mediterranean Hawaiian Supreme Luau Breakfast Pizza</li>
+  <li>Buffalo Mediterranean Hawaiian Supreme Luau Breakfast Pizza</li>
+  <li>Hawaiian Mediterranean Supreme Luau Breakfast Pizza</li>
+  <li>Buffalo Hawaiian Mediterranean Supreme Luau Breakfast Pizza</li>  
+  <li>Supreme Hawaiian Mediterranean Supreme Luau Breakfast Pizza</li>
+  <li>Buffalo Supreme Hawaiian Mediterranean Supreme Luau Breakfast Pizza</li>
+</ul>
+
+  <u>Toppings</u>
+  <ul>
+  
+  <li>Pepperoni</li>
+  <li>Green Olives</li>
+  <li>Black Olives</li>
+  <li>Anchovies</li>
+  <li>Capers</li>
+  <li>Sun-Dried Tomatoes</li>
+  <li>Artichoke Hearts</li>
+  <li>Roasted Red Peppers</li>
+  <li>Black Pepper</li>
+  <li>Mushrooms</li>
+  <li>Onions</li>
+  <li>Sausage</li>
+  <li>Ham</li>
+  <li>Salami</li>
+  <li>Turkey</li>
+  <li>Chicken</li>
+  <li>Bacon</li>
+  <li>Extra Cheese</li>
+  <li>Black Olives</li>
+  <li>Green Peppers</li>
+  <li>Pineapple</li>
+  <li>Spinach</li>
+  <li>Jalapenos</li>
+  <li>Tomatoes</li>
+  <li>Avocado</li>  
+  <li>Basil</li>
+  <li>Oregano</li>
+  <li>Red Pepper Flakes</li>
+  <li>Crushed Garlic</li>
+  <li>Red Onion</li>
+  <li>Green Onion</li>
+  <li>Chili Flakes</li>
+  <li>Crushed Red Pepper</li>
+</ul>
+
+<u> Wings</u>
+<ul>
+  <li>Buffalo Wings (Mild, Medium, Hot, Extra Hot, Suicide, Atomic, Nuclear, 
+    Inferno, Beyond Inferno, Apocalypse,)</li>
+  <li>BBQ Wings</li>
+  <li>Lemon Pepper Wings</li>
+  <li>Honey Mustard Wings</li>
+  <li>Spicy Garlic Wings</li>
+  <li>Cajun Wings</li>
+  <li>Garlic Parmesan Wings</li>
+  <li>Teriyaki Wings</li>
+  <li>Sweet Chili Wings</li>
+  <li>Mango Habanero Wings</li>
+  <li>Caribbean Jerk Wings</li>
+  <li>Buffalo Ranch Wings</li>
+  <li>Teriyaki Pineapple Wings</li>
+  <li>Spicy BBQ Wings</li>
+  <li>Garlic Butter Wings</li>
+  <li>Maple Bacon Wings</li>
+  <li>Truffle Parmesan Wings</li>
+  <li>Chipotle Lime Wings</li>
+  <li>Buffalo Blue Cheese Wings</li>
+  <li>Honey Sriracha Wings</li>
+  <li>Lemon Herb Wings</li>
+  <li>Sriracha Honey Wings</li>
+  <li>Garlic Chili Wings</li>
+  <li>Buffalo Honey Wings</li>
+  <li>Sweet and Spicy Wings</li>
+  <li>Korean BBQ Wings</li>
+  <li>Jamaican Jerk Wings</li>
+  <li>Buffalo Teriyaki Wings</li>
+  <li>Garlic Parmesan Truffle Wings</li>
+  <li>Buffalo Garlic Parmesan Wings</li>
+  <li>Honey Garlic Wings</li>
+  <li>Spicy Honey Garlic Wings</li>
+  <li>Lemon Garlic Wings</li>
+  <li>Parmesan Garlic Wings</li>
+  <li>Buffalo Parmesan Wings</li>
+  <li>Honey Butter Wings</li>
+  <li>Maple Sriracha Wings</li>
+  <li>Buffalo Maple Wings</li>
+  <li>Spicy Maple Wings</li>
+  <li>Buffalo Spicy Maple Wings</li>
+  <li>Sweet Maple Wings</li>
+  <li>Buffalo Sweet Maple Wings</li>        
+  <li>Buffalo Honey Butter Wings</li>
+  <li>Buffalo Sweet and Spicy Wings</li>
+  <li>Buffalo Lemon Herb Wings</li>
+  <li>Buffalo Garlic Chili Wings</li>
+  <li>Buffalo Honey Garlic Wings</li>
+  <li>Buffalo Maple Wings</li>
+  <li>Buffalo Spicy Honey Wings</li>
+  <li>Buffalo Sweet Maple Wings</li>            
+</ul>
+<u>Sides</u>
+<ul>
+  <li>French Fries</li>
+  <li>Onion Rings</li>
+  <li>Mozzarella Sticks</li>
+  <li>Garlic Bread</li>
+  <li>Coleslaw</li>
+  <li>Mac and Cheese</li>
+  <li>Potato Wedges</li>
+  <li>Side Salad</li>
+  <li>Mashed Potatoes</li>
+  <li>Corn on the Cob</li>
+  <li>Baked Beans</li>
+  <li>Fried Pickles</li>
+  <li>Onion Petals</li>
+  <li>Cheese Curds</li>
+  <li>Sweet Potato Fries</li>
+  <li>Tater Tots</li>
+  <li>Fried Mushrooms</li>
+  <li>Pickle Chips</li>
+  <li>Fried Zucchini</li>
+  <li>Onion Bhaji</li>
+  <li>Fried Cauliflower</li>
+  <li>Fried Green Tomatoes</li>
+  <li>Fried Okra</li>
+  <li>Fried Green Beans</li>
+  <li>Fried Eggplant</li>
+  <li>Fried Avocado</li>
+  <li>Fried Jalapenos</li>
+  <li>Fried Cauliflower Bites</li>
+  <li>Fried Sweet Potatoes</li>
+  <li>Fried Carrots</li>
+  <li>Fried Broccoli</li>
+  <li>Fried Cauliflower Wings</li>
+  <li>Fried Potato Skins</li>
+  <li>Fried Cheese Balls</li>
+  <li>Fried Mozzarella Sticks</li>
+  <li>Fried Shrimp</li>
+  <li>Fried Calamari</li>
+  <li>Fried Fish</li>
+</ul>
+<u>Desserts</u>
+<ul>
+  <li>Chocolate Cake</li>
+  <li>Cheesecake</li>
+  <li>Ice Cream Sundae</li>
+  <li>Brownie</li>
+  <li>Apple Pie</li>
+  <li>Chocolate Chip Cookies</li>
+  <li>Brownie Sundae</li>
+  <li>Fruit Tart</li>
+  <li>Banana Pudding</li>
+  <li>Key Lime Pie</li>
+  <li>Chocolate Mousse</li>
+  <li>Carrot Cake</li>
+  <li>Cheesecake Brownie</li>   
+  <li>Peach Cobbler</li>
+  <li>Banana Split</li>
+  <li>Molten Lava Cake</li>
+  <li>Tiramisu</li>
+  <li>Panna Cotta</li>
+  <li>Creme Brulee</li>
+  <li>Chocolate Fondue</li>
+  <li>Fruit Parfait</li>
+  <li>Gelato</li>
+  <li>Sorbet</li>
+  <li>Crepe</li>
+  <li>Chocolate Eclair</li>
+  <li>Lemon Bars</li>
+  <li>Raspberry Sorbet</li>
+  <li>Banana Foster</li>
+  <li>Peanut Butter Pie</li>
+  <li>Chocolate Brownie</li>
+  <li>Vanilla Ice Cream</li>
+  <li>Strawberry Ice Cream</li>
+  <li>Mint Chocolate Chip Ice Cream</li>
+  <li>Cookies and Cream Ice Cream</li>
+  <li>Rocky Road Ice Cream</li>
+  <li>Butter Pecan Ice Cream</li>
+  <li>Rocky Road Ice Cream</li>
+  <li>Salted Caramel Ice Cream</li>
+  <li>Pistachio Ice Cream</li>
+  <li>Neapolitan Ice Cream</li>
+  <li>Chocolate Gelato</li>
+  <li>Vanilla Gelato</li>
+  <li>Strawberry Gelato</li>
+  <li>Pistachio Gelato</li>
+  <li>Hazelnut Gelato</li>
+  <li>Stracciatella Gelato</li>
+  <li>Tiramisu Gelato</li>
+  <li>Chocolate Chip Gelato</li>
+  <li>Vanilla Bean Gelato</li>
+  <li>Strawberry Cheesecake Gelato</li>
+  <li>Mango Gelato</li>
+  <li>Coconut Gelato</li>
+  <li>Coffee Gelato</li>
+  <li>Matcha Gelato</li>
+  <li>Black Sesame Gelato</li>
+  <li>Rum Raisin Gelato</li>
+  <li>Salted Caramel Gelato</li>
+  <li>Hazelnut Chocolate Gelato</li>
+  <li>Strawberry Gelato</li>
+  <li>Mango Sorbet</li>
+  <li>Raspberry Sorbet</li>
+  <li>Lemon Sorbet</li>
+  <li>Orange Sorbet</li>        
+  <li>Mango Sorbet</li>
+  <li>Strawberry Sorbet</li>
+  <li>Raspberry Sorbet</li>
+  <li>Lime Sorbet</li>
+  <li>Blueberry Sorbet</li>
+  <li>Cherry Sorbet</li>
+  <li>Watermelon Sorbet</li>    
+  <li>Pineapple Sorbet</li>
+</ul>
+ <u> Kids Menu</u>
+<ul>
+  <li>Mini Margherita</li>
+  <li>Mini Pepperoni</li>
+  <li>Mini BBQ Chicken</li>
+  <li>Mini Veggie</li>
+  <li>Mini Hawaiian</li>
+  <li>Mini Meat Lovers</li>
+  <li>Mini Supreme</li>
+  <li>Custom Mini Pizza</li>
+  <li>Chicken Nuggets</li>
+  <li>Mac and Cheese</li>
+  <li>Grilled Cheese Sandwich</li>
+  <li>Hot Dog</li>
+  <li>Mini Corn Dogs</li>
+  <li>Fruit Cup</li>
+  <li>Yogurt Cup</li>
+  <li>Applesauce</li>
+  <li>Cheese Stick</li>
+  <li>Carrot Sticks</li>
+  <li>Celery Sticks</li>
+  <li>Grapes</li>
+  <li>Banana</li>
+  <li>Strawberries</li>
+  <li>Blueberries</li>
+  <li>Raspberries</li>
+  <li>Oranges</li>
+  <li>Grapefruit</li>
+  <li>Water</li>
+  <li>Apple Juice</li>
+  <li>Orange Juice</li>
+  <li>Grape Juice</li>
+  <li>Juice Box</li>
+  <li>French Fries</li>
+  <li>Milk</li>
+  <li>Chocolate Milk</li>
+  <li>Strawberry Milk</li>
+  
+
+</ul>
+<u>Beverages</u>
+<ul>
+  <li>Water</li>
+  <li>Apple Juice</li>
+  <li>Orange Juice</li>
+  <li>Grape Juice</li>
+  <li>Root Beer</li>
+  <li>Coca Cola</li>
+  <li>Pepsi</li>
+  <li>Dr Pepper</li>
+  <li>Sprite</li>
+  <li>Fanta</li>
+  <li>Mountain Dew</li>
+  <li>Lemonade</li>
+  <li>Iced Tea</li>
+<li>  Monster Zero Ultra</li>
+  <li>Red Bull</li>
+  <li>Monster Energy</li>
+  <li>Bang Energy</li>
+  <li>Reign Energy</li>
+  <li>Celsius Energy</li>
+  <li>Monster Rehab</li>
+  <li>Rockstar Energy</li>
+  <li>5-hour Energy</li>
+  <li>Monster Ultra Sunrise</li>
+  <li>Hot Chocolate</li>
+  <li>Milk</li>
+  <li>Chocolate Milk</li>
+  <li>Strawberry Milk</li>
+</ul>
+<p>Also, we are known for our cookie baking skills. Try our famous quadruple chocolate cookies! </p>
+<u>Cookies</u>
+<ul>
+  <li>Chocolate Chip Cookies</li>
+  <li>Oatmeal Raisin Cookies</li>
+  <li>Peanut Butter Cookies</li>
+  <li>Double Chocolate Cookies</li>
+  <li>Snickerdoodle Cookies</li>
+  <li>White Chocolate Macadamia Cookies</li>
+  <li>Quadruple Chocolate Cookies</li>
+  <li>Gingerbread Cookies</li>
+  <li>Molasses Cookies</li>
+  <li>Sugar Cookies</li>
+  <li>Shortbread Cookies</li>
+  <li>Butter Cookies</li>
+  <li>Lemon Cookies</li>
+  <li>Almond Cookies</li>
+  <li>Coconut Cookies</li>
+  <li>Caramel Cookies</li>
+  <li>Peanut Butter Chocolate Chip Cookies</li>
+  <li>Oreo Cookies</li>
+  <li>M&M Cookies</li>
+  <li>Brownie Cookies</li>
+  <li>Carrot Cake Cookies</li>
+  <li>Pumpkin Spice Cookies</li>
+  <li>Chai Spice Cookies</li>
+  <li>Matcha Cookies</li>
+  <li>Mocha Chocolate Chip Cookies</li>
+  <li>Espresso Cookies</li>
+  <li>White Chocolate Raspberry Cookies</li>
+  <li>Chocolate Mint Cookies</li>
+  <li>Red Velvet Cookies</li>
+  <li>Birthday Cake Cookies</li>
+  <li>Funfetti Cookies</li>
+  <li>Banana Cookies</li>
+  <li>Choco Chip Banana Cookies</li>
+  <li>Peanut Butter Banana Cookies</li>
+  <li>Chocolate Banana Cookies</li>
+  <li>Banana Nut Cookies</li>
+  <li>Banana Chocolate Chip Cookies</li>
+  <li>Banana Oatmeal Cookies</li>
+  <li>Banana Peanut Butter Cookies</li>
+  <li>Banana White Chocolate Cookies</li>
+  <li>Banana Caramel Cookies</li>
+  <li>Banana Cinnamon Cookies</li>
+  <li>Banana Ginger Cookies</li>
+  <li>Banana Maple Cookies</li>
+  <li>Banana Chocolate Mint Cookies</li>
+  <li>Banana Coconut Cookies</li>
+  <li>Banana Lemon Cookies</li>
+  <li>Banana Blueberry Cookies</li>
+  <li>Banana Strawberry Cookies</li>
+  <li>Banana Raspberry Cookies</li>
+  <li>Banana Blackberry Cookies</li>
+  <li>Banana Pineapple Cookies</li>
+  <li>Banana Mango Cookies</li>
+  <li>Banana Papaya Cookies</li>
+  <li>Banana Kiwi Cookies</li>
+  <li>Banana Watermelon Cookies</li>
+  <li>Banana Cherry Cookies</li>
+  <li>Banana Peach Cookies</li>
+  <li> Dubai Chocolate Cookies</li>
+  <li> Almond Cookies</li>
+  <li> Pistachio Cookies</li>
+  <li> Cashew Cookies</li>
+  <li> Hazelnut Cookies</li>
+  <li> Walnut Cookies</li>
+  <li> Pecans Cookies</li>
+  <li> Macadamia Nut Cookies</li>
+  <li> Brazil Nut Cookies</li>
+  <li> Cashew Cookies</li>
+  <li> Pecan Cookies</li>
+</ul>
+
+
+
+    <h3 class="contact-heading">Contact Us</h3>
+    <p>If you have any questions or inquiries, please reach out to us at <a href="mailto:tek7304555@gmail.com">tek7304555@gmail.com</a>.</p>
+    <p>We look forward to hearing from you!</p>
+    <script>
+        const menuItems = [];
+        const menuSections = document.querySelectorAll("u");
+
+        menuSections.forEach((heading, sectionIndex) => {
+            const list = heading.nextElementSibling;
+            if (!list || list.tagName !== "UL") return;
+
+            const category = heading.textContent.trim();
+            const sectionId = `menu-section-${sectionIndex}`;
+            heading.id = sectionId;
+            list.id = `${sectionId}-items`;
+
+            list.querySelectorAll("li").forEach((listItem) => {
+                const item = {
+                    id: menuItems.length,
+                    name: listItem.textContent.trim(),
+                    category
+                };
+                menuItems.push(item);
+
+                const link = document.createElement("a");
+                link.className = "menu-item-link";
+                link.href = `?item=${item.id}`;
+                link.textContent = item.name;
+                listItem.replaceChildren(link);
+            });
+        });
+
+        if (menuSections.length > 0) {
+            const menuTools = document.createElement("section");
+            menuTools.className = "menu-tools";
+            menuTools.setAttribute("aria-label", "Find a menu item");
+
+            const search = document.createElement("input");
+            search.className = "menu-search";
+            search.type = "search";
+            search.placeholder = "Search pizzas, wings, desserts...";
+            search.setAttribute("aria-label", "Search menu items");
+
+            const categoryNav = document.createElement("nav");
+            categoryNav.className = "category-nav";
+            categoryNav.setAttribute("aria-label", "Menu categories");
+
+            menuSections.forEach((heading) => {
+                const categoryLink = document.createElement("a");
+                categoryLink.href = `#${heading.id}`;
+                categoryLink.textContent = heading.textContent.trim();
+                categoryNav.append(categoryLink);
+            });
+
+            search.addEventListener("input", () => {
+                const query = search.value.trim().toLowerCase();
+                menuSections.forEach((heading) => {
+                    const list = heading.nextElementSibling;
+                    const items = list.querySelectorAll("li");
+                    items.forEach((listItem) => {
+                        listItem.hidden = !listItem.textContent.toLowerCase().includes(query);
+                    });
+                    heading.hidden = !Array.from(items).some((listItem) => !listItem.hidden);
+                });
+            });
+
+            menuTools.append(search, categoryNav);
+            menuSections[0].before(menuTools);
+        }
+
+        function escapeSvgText(value) {
+            return value.replace(/[&<>"']/g, (character) => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&apos;"
+            })[character]);
+        }
+
+        function makeFoodIllustration(item) {
+            const category = item.category.toLowerCase();
+            let icon = "🍽️";
+            if (category.includes("pizza")) icon = "🍕";
+            else if (category.includes("wing")) icon = "🍗";
+            else if (category.includes("side") || category.includes("topping")) icon = "🍟";
+            else if (category.includes("dessert")) icon = "🍰";
+            else if (category.includes("beverage")) icon = "🥤";
+            else if (category.includes("cookie")) icon = "🍪";
+            else if (category.includes("kids")) icon = "😋";
+
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+                <rect width="640" height="420" rx="36" fill="#f5e9d8"/>
+                <circle cx="320" cy="188" r="132" fill="#fffaf3"/>
+                <circle cx="320" cy="188" r="108" fill="#eddbc2"/>
+                <text x="320" y="235" text-anchor="middle" font-size="128">${icon}</text>
+                <text x="320" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#7d2c24">${escapeSvgText(item.name.slice(0, 34))}</text>
+            </svg>`;
+            return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+        }
+
+        const selectedItemId = new URLSearchParams(window.location.search).get("item");
+        if (selectedItemId !== null) {
+            const item = menuItems[Number(selectedItemId)];
+            document.title = item ? `${item.name} | Pizzeria Deliziosa` : "Menu item not found";
+            document.body.replaceChildren();
+
+            const page = document.createElement("main");
+            page.className = "item-page";
+            const backLink = document.createElement("a");
+            backLink.className = "back-link";
+            backLink.href = window.location.pathname;
+            backLink.textContent = "← Back to the full menu";
+            page.append(backLink);
+
+            if (item) {
+                const category = document.createElement("p");
+                category.className = "item-category";
+                category.textContent = item.category;
+
+                const title = document.createElement("h1");
+                title.textContent = item.name;
+
+                const picture = document.createElement("img");
+                picture.className = "item-picture";
+                picture.src = makeFoodIllustration(item);
+                picture.alt = `Illustration of ${item.name}`;
+
+                const description = document.createElement("p");
+                description.className = "item-description";
+                description.textContent = `A delicious ${item.name.toLowerCase()}, made fresh at Pizzeria Deliziosa.`;
+
+                page.append(category, title, picture, description);
+            } else {
+                const message = document.createElement("h1");
+                message.textContent = "Sorry, we couldn't find that menu item.";
+                page.append(message);
+            }
+
+            document.body.append(page);
+        }
+    </script>
+</body>
+</html>
